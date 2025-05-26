@@ -26,7 +26,7 @@ async def get_album(message: types.Message):
 		album.append(message_media)
 
 # отправка альбомов под спойлером
-@router.message(Command("sp"), F.reply_to_message.photo, F.media_group_id.as_("media_group_id"))
+@router.message(Command("sp"), F.reply_to_message.photo, F.reply_to_message.media_group_id.as_("media_group_id"))
 async def group_spoiler(message: types.Message,  media_group_id: str):
 	album_builder = MediaGroupBuilder(caption=f"from: {message.reply_to_message.from_user.username or message.reply_to_message.from_user.full_name} \
 								  ({message.from_user.username or message.from_user.full_name})")
