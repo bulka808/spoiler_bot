@@ -32,7 +32,10 @@ async def group_spoiler(message: types.Message,  media_group_id: str):
 								  ({message.from_user.username or message.from_user.full_name})")
 	album = Albums.get_or_create(media_group_id=media_group_id)	
 	[album_builder.add_photo(media=photo) for photo in album.files]
+	
 	await message.answer_media_group(media=album_builder.build())
+	await bot.delete_message(message_id=message.reply_to_message.message_id, chat_id=message.chat.id)
+	await bot.delete_message(message_id=message.message_id, chat_id=message.chat.id)
 
 # обычная обработка сообщений
 @router.message(Command("sp"), F.reply_to_message.photo[-1].file_id.as_("photo"))
