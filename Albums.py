@@ -1,3 +1,4 @@
+from aiogram import types
 #сам класс альбома
 class Album:
 	def __init__(self, media_group_id: str):
@@ -5,9 +6,13 @@ class Album:
 		self.media_group_id: str = media_group_id
 		# список file_id альбома
 		self.files: list[str] = []
-	def append(self, file_id: str) -> None:
+		self.messages: list[int] = []
+	def append(self, message: types.Message) -> None:
+		file_id = message.photo[-1].file_id
+		message_id = message.message_id
 		if file_id not in self.files:
-		    self.files.append(file_id)
+			self.files.append(file_id)
+			self.messages.append(message_id)
 		
 # класс для хранения альбомов
 class AlbumStorage:
